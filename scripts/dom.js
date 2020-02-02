@@ -7,7 +7,7 @@ $(document).ready(function () {
     if (!$.isEmptyObject(cidr)) {
       $("#message").text("");
       $("#classN").text(cidr.classN);
-      $("#mask").text(cidr.netmask);
+      $("#mask").text(cidr.netmask.join("."));
       $("#broadcast").text(cidr.netID.join("."));
       $("#netid").text("{network id}");
       $("#hosts").text(Math.abs(cidr.numHosts).toLocaleString());
