@@ -1,5 +1,26 @@
 "use strict";
 
+function ipToBinary(ip) {
+  var output = [];
+  var segment = "";
+
+  ip = ip.split(".").map(function(x) { return parseInt(x) ;});
+
+  if (ip.length === 4) {
+    for (var i = 0; i < 4; i++) {
+      segment = ip[i].toString(2);
+
+      while (segment.length < 8) {
+        segment = "0" + segment;
+      }
+
+      output.push(segment);
+    }
+  }
+
+  return output;
+}
+
 function findClass(firstOctet) {
   if (firstOctet >= 1 && firstOctet <= 126) {
     return "A";
@@ -39,15 +60,13 @@ function findNetMask(range) {
   }
 }
 
+// Mask
 function countHosts(range) {
-  var numHosts = 1;
-  var steps = 32 - range;
+  return -1 << (32 - range);
+}
 
-  while (steps-- > 0) {
-    numHosts *= 2;
-  }
-
-  return numHosts;
+function intToString(mask) {
+  return [mask >>> 24, mask >> 16 & 255, mask >> 8 & 255, mask & 255].join('.');
 }
 
 function findFirstIP(mask, ip) {
@@ -83,15 +102,18 @@ function CIDR(cidr) {
     cidrObj.classN = findClass(cidrObj.ip[0]);
 
     // Determine the subnet mask by the given range.
-    cidrObj.netmask = findNetMask(cidrObj.range);
+    cidrObj.netmask = intToString(countHosts(cidrObj.range));
 
     cidrObj.netID = findFirstIP(cidrObj.netmask, cidrObj.ip); // First IP
 
     // --> TODO: Add first usable IP
+    // --> TODO: Add last usable IP
 
     cidrObj.broadcast = "{broadcast}"; // Last IP
 
-    cidrObj.numHosts = countHosts(cidrObj.range);
+    // countHosts returns total number of IPs in the range, so we need to remove 2 to account for
+    // the Network ID and Broadcast addresses.
+    cidrObj.numHosts = countHosts(cidrObj.range) - 2;
 
     return cidrObj;
   }

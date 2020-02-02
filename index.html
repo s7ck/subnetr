@@ -37,11 +37,14 @@
     <div id="layout" class="pure-g">
       <div class="sidebar pure-u-1 pure-u-md-1-4">
         <div class="header">
-          <h1 class="brand-title">subnetr</h1>
+          <h1 class="brand-title">subnetr (IPv4)</h1>
           <h2 class="brand-tagline">by stck</h2>
 
           <nav class="nav">
             <ul class="nav-list">
+              <li class="nav-item">
+                <a class="pure-button" href="https://keybase.io/s7ck">keybase</a>
+              </li>
               <li class="nav-item">
                 <a class="pure-button" href="https://github.com/s7ck">github</a>
               </li>
@@ -65,7 +68,7 @@
             </header> -->
 
             <div class="post-description">
-              <p>Enter the required information below and click "run".</p>
+              <p>Enter an IPv4 address in CIDR notation and click run. Ex: x.x.x.x/24</p>
               <table class="pure-table pure-table-horizontal">
                 <!-- <thead>
                   <tr>
@@ -78,7 +81,7 @@
                 <tbody>
                   <tr>
                     <td>CIDR</td>
-                    <td><input type="text" id="cidr" name="cidr" size="17" value="192.168.0.0/24" /></td>
+                    <td><input type="text" id="cidr" name="cidr" size="17" value="192.168.0.0/18" /></td>
                     <td>ex: 192.168.0.0/24</td>
                   </tr>
                   <tr>
@@ -113,15 +116,6 @@
             </div>
           </section>
         </div><!-- end post -->
-
-        <div class="footer">
-          <div class="pure-menu pure-menu-horizontal">
-            <ul>
-              <li class="pure-menu-item"><a href="https://twitter.com/s7ckmn/" class="pure-menu-link">Twitter</a></li>
-              <li class="pure-menu-item"><a href="http://github.com/s7ck/" class="pure-menu-link">GitHub</a></li>
-            </ul>
-          </div>
-        </div><!-- end footer -->
       </div> <!-- end body container -->
     </div> <!-- end whole-page container -->
   </body>
