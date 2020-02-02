@@ -1,55 +1,134 @@
 <!---------------------- |                   __
-       _     |_  ._   _ _|_ ._   |_        _  / _ |  
-      _> |_| |_) | | (/_ |_ |    |_) \/   _> / (_ |< 
+       _     |_  ._   _ _|_ ._   |_        _  / _ |
+      _> |_| |_) | | (/_ |_ |    |_) \/   _> / (_ |<
                                      / ------------------>
-
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <title>s7ck's subnetr</title>
+    <title>subnetr</title>
+
+    <meta charset="utf-8">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu%20Mono">
-    <style>
-    body, input, button {
-    font-family: 'Ubuntu Mono', serif;
-    font-size: 14px;
-    }
-    .label_td {
-    text-align: right;
-    }
-    h1 {
-    font-family: "Ubuntu Mono", serif;
-    font-weight: bold;
-    font-size: 24px;
-    }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a blog page with a list of posts.">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-" crossorigin="anonymous">
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-old-ie-min.css">
+    <![endif]-->
 
-    <script language="JavaScript">
-      function deconstruct() {
-        var cidr = document.getElementById("cidr").value;
+    <!--[if gt IE 8]><!-->
+      <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css">
+    <!--<![endif]-->
 
-        if (/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\/[0-9]{1,2}$/.test(cidr)) {
-          console.log("Valid CIDR = " + cidr.split("/")[1]);
-        }
-        else {
-          console.log("Invalid CIDR '" + cidr + "'");
-        }
-      }
-    </script>
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="css/layouts/blog-old-ie.css">
+    <![endif]-->
+
+    <!--[if gt IE 8]><!-->
+      <link rel="stylesheet" href="css/layouts/blog.css">
+    <!--<![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="scripts/cidr.js"></script>
+    <script src="scripts/dom.js"></script>
   </head>
+
   <body>
-    <h1>s7ck's subnetr</h1>
-    <table>
-      <tr>
-        <td class="label_td">CIDR:</td>
-        <td><input type="text" id="cidr" name="cidr" size="17" value="000.000.000.000/24"/></td>
-      </tr>
-      <tr>
-        <td class="label_td">Starting IP:</td>
-        <td><input type="text" id="startip" name="startip" size="17" value="255.255.255.255"/></td>
-      </tr>
-      <tr>
-        <td colspan="2" align="right"><button onClick="deconstruct();">Run</button></td>
-      </tr>
-    </table>
+    <div id="layout" class="pure-g">
+      <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="header">
+          <h1 class="brand-title">subnetr (IPv4)</h1>
+          <h2 class="brand-tagline">by stck</h2>
+
+          <nav class="nav">
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a class="pure-button" href="https://keybase.io/s7ck">keybase</a>
+              </li>
+              <li class="nav-item">
+                <a class="pure-button" href="https://github.com/s7ck">github</a>
+              </li>
+              <li class="nav-item">
+                <a class="pure-button" href="https://twitter.com/s7ckmn">twitter</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div class="content pure-u-1 pure-u-md-3-4">
+        <div class="posts">
+          <section class="post">
+            <!-- <header class="post-header">
+              <h2 class="post-title">subnetr</h2>
+
+              <p class="post-meta">
+                By <a href="https://github.com/s7ck" class="post-author">stck</a>
+              </p>
+            </header> -->
+
+            <div class="post-description">
+              <p>Enter an IPv4 address in CIDR notation and click run. Ex: x.x.x.x/24</p>
+              <table class="pure-table pure-table-horizontal">
+                <!-- <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                  </tr>
+                </thead> -->
+                <tbody>
+                  <tr>
+                    <td>CIDR</td>
+                    <td><input type="text" id="cidr" name="cidr" size="17" value="192.168.0.0/18" /></td>
+                    <td>ex: 192.168.0.0/24</td>
+                  </tr>
+                  <tr>
+                    <td>Class</td>
+                    <td id="classN">-</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Subnet Mask</td>
+                    <td id="mask">-</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Broadcast IP</td>
+                    <td id="broadcast">-</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Network ID</td>
+                    <td id="netid">-</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Hosts</td>
+                    <td id="hosts">-</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <button id="runButton">run</button>
+              <span id="message" class="message"></span>
+            </div>
+          </section>
+        </div><!-- end post -->
+      </div> <!-- end body container -->
+    </div> <!-- end whole-page container -->
   </body>
 </html>
+
+
+<!------------------------------------- [X1A_H:2020] --
+TQBlAHYATAA4AE4AQwBqAHMAagBRADQANAA2AG0AMwA0AGIASAAyAEQ
+ATABEAEwAYgBvAFMATgBmAGgAVQBjADoAagBKAFUAMgBQAHAAWQA5AG
+0AWgBiAHEAVAB2AEgARwBvAEgASwB0AHgARABCAEgAZwBqAGEAbABoA
+EQAZAB0ADoAdwBNADYAMgA3AFUAaQBCADQAYQBBAGEANABMAHUATgBY
+AFQANQBNAFEAUgB1AEMAUQA5AGYAUABKAFUAMQA2ADoAUQA4AHAATgA
+1AE4AZgBlAGYAcABpAFgAZwBJAG4AWQBMAFEAMgBiAFAATgBIAHEAWA
+BTAEcASAByAFMATgBSADoAZABjAGwANQAzAGUAZQBCAGoARABMAE0AU
+gAyADcAeABtAEQAUwBwAGkANwB3AFEAeABxAFMANQB2AEcARABnAA==
+------------------------------------------------------>
