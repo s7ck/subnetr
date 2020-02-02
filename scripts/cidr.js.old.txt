@@ -1,0 +1,105 @@
+//cidr.js.old
+"use strict";
+
+class CIDR {
+  constructor(cidr) {
+    if (this.validCIDR(cidr)) {
+      // "10.10.1.13/24" becomes ["10.10.1.13", "24"]
+      this.cidr = cidr.split("/");
+
+      // "24" becomes 24
+      this.whack = parseInt(this.cidr[1]);
+
+      // [255, 255, 255, 0]
+      this.mask = this.makeMask();
+
+      // We'll incrment this later.
+      this.numHosts = this.countHosts();
+
+      /**
+       * Converts an IPV4 address into an array of integers for each octet.
+       * Example: "192.168.1.118" becomes [192, 168, 1, 118]
+       */
+      this.ip = this.parseIP();
+    }
+    else {
+      clearDetails(true);
+    }
+  }
+
+
+  // Casts each octet string in the arry to integer.
+  parseIP() {
+    return this.cidr[0].split(".").map(function(e) {
+      return parseInt(e);
+    });
+  }
+
+  // Determines the number of hosts given the provided range.
+  countHosts() {
+    console.log("counting hosts");
+    var steps = 32; // max whack... lol.
+    steps -= this.whack;
+
+    // Reset numHosts for a new count
+    this.numHosts = 1;
+
+    while (steps-- > 0) {
+      this.numHosts *= 2;
+    }
+
+    console.log("--> " + this.numHosts);
+    return this.numHosts;
+  }
+
+  // regex looks for valid IPv4 addresses with a /1 through /32 range notation
+  // example: 10.10.1.152/18
+  validCIDR(cidr) {
+    return /^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\/([1-9]|[12][0-9]|3[0-2])$/.test(cidr);
+  }
+
+  makeMask() {
+    if (this.whack <= 8) {
+      return [255, 0, 0, 0];
+    }
+    else if (this.whack <= 16) {
+      return [255, 255, 0, 0];
+    }
+    else if (this.whack <= 24) {
+      return [255, 255, 255, 0];
+    }
+    else if (this.whack <= 32) {
+      return [255, 255, 255, 0];
+    }
+    else {
+      return [-1, -1, -1, -1];
+    }
+  }
+
+  determineClass(ip) {
+    var firstOctet = parseInt(ip.split(".")[0]);
+
+    if (firstOctet >= 1 && firstOctet <= 126) {
+      return "A";
+    }
+    else if (firstOctet >= 128 && firstOctet <= 191) {
+      return "B";
+    }
+    else if (firstOctet >= 192 && firstOctet <= 223) {
+      return "C";
+    }
+    else if (firstOctet >= 224 && firstOctet <= 249) {
+      return "D";
+    }
+    else if (firstOctet >= 240 && firstOctet <= 255) {
+      return "E";
+    }
+    else {
+      return "Bad IP";
+    }
+  }
+
+  solve(callback) {
+    callback();
+  }
+}
