@@ -96,7 +96,7 @@ function CIDR(cidr) {
 
     // countHosts returns total number of IPs in the range, so we need to remove 2 to account for
     // the Network ID and Broadcast addresses.
-    cidrObj.numHosts = countHosts(cidrObj.cidr) - 2;
+    cidrObj.numHosts = countHosts(cidrObj.cidr);
 
     return cidrObj;
   }
