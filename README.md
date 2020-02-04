@@ -11,7 +11,7 @@ The table will be populated with the following information:
 4. Broadcast IP
 5. Hosts
 
-## special note on count of hosts
+## special note on hosts count
 The number of hosts displayed is the total number of addresses in your range **minus 2** reserved addresses: Network ID (first address), and Broadcast (last address).
 
 Happy subnetting.
