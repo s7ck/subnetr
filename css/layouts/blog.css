@@ -38,9 +38,8 @@ h3 {
 }
 
 .sidebar {
-    /* background: rgb(61, 79, 93); */
-    /* background: rgb(29, 32, 0); */ /* DARK */
-    background: rgb(200, 255, 0); /* BRIGHT */
+    box-shadow: 0px 0px 10px rgb(201, 201, 201);
+    background: rgb(200, 255, 0);
     color: #fff;
 }
 
@@ -49,14 +48,12 @@ h3 {
     margin: 0;
 }
 .brand-title {
-    /* color: rgb(165, 211, 0); */ /* DARK THEME */
-    color: rgb(96, 122, 0); /* BRIGHT THEME */
+    color: rgb(96, 122, 0);
     text-transform: lowercase;
 }
 .brand-tagline {
     font-weight: 300;
-    /* color: rgb(176, 202, 219); */
-    color: rgb(172, 187, 108); /* DARK THEME */
+    color: rgb(172, 187, 108);
 }
 
 .nav-list {
@@ -71,10 +68,8 @@ h3 {
 }
 .nav-item a {
     background: transparent;
-    /* border: 2px solid rgb(167, 192, 133); */ /* DARK THEME */
-    border: 2px solid rgb(200, 255, 0); /* BRIGHT THEME */
-    /* color: #fff; */ /* DARK THEME */
-    color: #000; /* BRIGHT THEME */
+    border: 2px solid rgb(200, 255, 0);
+    color: #000;
     margin-top: 1em;
     letter-spacing: 0.05em;
     text-transform: lowercase;
@@ -83,8 +78,7 @@ h3 {
 .nav-item a:hover,
 .nav-item a:focus {
     background: transparent;
-    /* border: 2px solid rgb(200, 255, 0); */ /* DARK THEME */
-    border: 2px solid rgb(200, 255, 0); /* BRIGHT THEME */
+    border: 2px solid rgb(200, 255, 0);
     text-decoration: underline;
     text-transform: uppercase;
 }
