@@ -59,29 +59,13 @@
       <div class="content pure-u-1 pure-u-md-3-4">
         <div class="posts">
           <section class="post">
-            <!-- <header class="post-header">
-              <h2 class="post-title">subnetr</h2>
-
-              <p class="post-meta">
-                By <a href="https://github.com/s7ck" class="post-author">stck</a>
-              </p>
-            </header> -->
-
             <div class="post-description">
               <p>Enter an IPv4 address in CIDR notation and click run. Ex: x.x.x.x/24</p>
               <table class="pure-table pure-table-horizontal">
-                <!-- <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Make</th>
-                    <th>Model</th>
-                    <th>Year</th>
-                  </tr>
-                </thead> -->
                 <tbody>
                   <tr>
                     <td>CIDR</td>
-                    <td><input type="text" id="cidr" name="cidr" size="17" value="192.168.0.0/18" /></td>
+                    <td><input type="text" id="cidr" name="cidr" size="17" placeholder="192.168.0.0/18" /></td>
                     <td>ex: 192.168.0.0/24</td>
                   </tr>
                   <tr>
@@ -95,13 +79,13 @@
                     <td></td>
                   </tr>
                   <tr>
-                    <td>Broadcast IP</td>
-                    <td id="broadcast">-</td>
+                    <td>Network ID</td>
+                    <td id="netid">-</td>
                     <td></td>
                   </tr>
                   <tr>
-                    <td>Network ID</td>
-                    <td id="netid">-</td>
+                    <td>Broadcast IP</td>
+                    <td id="broadcast">-</td>
                     <td></td>
                   </tr>
                   <tr>

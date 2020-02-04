@@ -40,20 +40,33 @@ function countHosts(cidr) {
 }
 
 
-function findFirstIP(mask, ip) {
-  var result = [];
+function ipToInt(ipArray) {
+    var x = 0;
+    var y = 0;
 
-  for (var i = 0; i < mask.length; i++) {
-    if (mask[i] === 255) {
-      result.push(ip[i]);
+    while (x < 4) {
+        y <<= 8;
+        y += +ipArray[x++];
     }
-    else {
-      result.push(0);
-    }
-  }
 
-  return result;
+    return y >>> 0;
 }
+
+
+function intToIP(ipInt) {
+  return [ipInt >>> 24, ipInt >> 16 & 255, ipInt >> 8 & 255, ipInt & 255].join(".");
+}
+
+
+function findFirstIP(mask, ip) {
+  return intToIP(ip & mask);
+}
+
+
+function findLastIP(mask, ip) {
+  return intToIP(ip | ~mask);
+}
+
 
 function CIDR(cidr) {
   // regex looks for valid IPv4 addresses with a /1 through /32 range notation
@@ -75,9 +88,11 @@ function CIDR(cidr) {
     // Determine the subnet mask by the given range.
     cidrObj.netmask = deriveMask(cidrObj.cidr);
 
-    cidrObj.netID = findFirstIP(cidrObj.netmask, cidrObj.ip); // First IP
+    // Network ID is the first IP in the range.
+    cidrObj.netID = findFirstIP(ipToInt(cidrObj.netmask), ipToInt(cidrObj.ip));
 
-    cidrObj.broadcast = "{broadcast}"; // Last IP
+    // Broadcast address is the last IP in the range.
+    cidrObj.broadcast = findLastIP(ipToInt(cidrObj.netmask), ipToInt(cidrObj.ip));
 
     // countHosts returns total number of IPs in the range, so we need to remove 2 to account for
     // the Network ID and Broadcast addresses.

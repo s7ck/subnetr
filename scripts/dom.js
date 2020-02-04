@@ -8,8 +8,8 @@ $(document).ready(function () {
       $("#message").text("");
       $("#classN").text(cidr.classN);
       $("#mask").text(cidr.netmask.join("."));
-      $("#broadcast").text(cidr.netID.join("."));
-      $("#netid").text("{network id}");
+      $("#netid").text(cidr.netID);
+      $("#broadcast").text(cidr.broadcast);
       $("#hosts").text(Math.abs(cidr.numHosts).toLocaleString());
     }
     else {
